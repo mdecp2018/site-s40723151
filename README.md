@@ -3,7 +3,7 @@
 
 http://mdecourse.github.io/2018fall/
 
-分組示範倉儲: https://github.com/scrum-1/scrum-1.github.io
+分組示範倉儲: https://github.com/mdecp2018/site-s40723151
 
 設定步驟: https://github.com/scrum-1/scrum-1.github.io/wiki
 
