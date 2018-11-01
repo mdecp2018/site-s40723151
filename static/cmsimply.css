@@ -2,7 +2,6 @@
   position: relative;
 }
 header{
-  background: #ccc;
   padding: 20px;
 }
 confmenu
@@ -201,6 +200,6 @@ background-color: white;
 width: 195px;
 }
 body {
-  margin-bottom: 120px;
+  background-image:url("https://photo.16pic.com/00/21/66/16pic_2166721_b.jpg")
 }
 
