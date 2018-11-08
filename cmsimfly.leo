@@ -45,69 +45,69 @@
 </v>
 <v t="amd.20160714230833.1" a="E"><vh>編輯 flaskapp.py</vh>
 <v t="leo.20181104192450.1" a="E"><vh>@clean flaskapp.py</vh>
-<v t="leo.20181104192502.1"><vh>Declarations </vh></v>
-<v t="leo.20181104192502.2"><vh>checkLogin </vh></v>
-<v t="leo.20181104192502.3"><vh>delete_file </vh></v>
-<v t="leo.20181104192502.4"><vh>doDelete </vh></v>
-<v t="leo.20181104192502.5"><vh>doSearch </vh></v>
-<v t="leo.20181104192502.6"><vh>download </vh></v>
-<v t="leo.20181104192502.7"><vh>download_list </vh></v>
-<v t="leo.20181104192502.8"><vh>downloadlist_access_list </vh></v>
-<v t="leo.20181104192502.9"><vh>downloads </vh></v>
-<v t="leo.20181104192502.10"><vh>downloadselect_access_list </vh></v>
-<v t="leo.20181104192502.11"><vh>edit_config </vh></v>
-<v t="leo.20181104192502.12"><vh>edit_page </vh></v>
-<v t="leo.20181104192502.13"><vh>editorfoot </vh></v>
-<v t="leo.20181104192502.14"><vh>editorhead </vh></v>
-<v t="leo.20181104192502.15"><vh>error_log </vh></v>
-<v t="leo.20181104192502.16"><vh>file_get_contents </vh></v>
-<v t="leo.20181104192502.17"><vh>file_lister </vh></v>
-<v t="leo.20181104192502.18"><vh>file_selector </vh></v>
-<v t="leo.20181104192502.19"><vh>file_selector_script </vh></v>
-<v t="leo.20181104192502.20"><vh>fileaxupload </vh></v>
-<v t="leo.20181104192502.21"><vh>fileuploadform </vh></v>
-<v t="leo.20181104192502.22"><vh>flvplayer </vh></v>
-<v t="leo.20181104192502.23"><vh>generate_pages </vh></v>
-<v t="leo.20181104192502.24"><vh>get_page </vh></v>
-<v t="leo.20181104192502.25"><vh>get_page2 </vh></v>
-<v t="leo.20181104192502.26"><vh>image_delete_file </vh></v>
-<v t="leo.20181104192502.27"><vh>image_doDelete </vh></v>
-<v t="leo.20181104192502.28"><vh>image_list </vh></v>
-<v t="leo.20181104192502.29"><vh>imageaxupload </vh></v>
-<v t="leo.20181104192502.30"><vh>imagelist_access_list </vh></v>
-<v t="leo.20181104192502.31"><vh>imageselect_access_list </vh></v>
-<v t="leo.20181104192502.32"><vh>imageuploadform </vh></v>
-<v t="leo.20181104192502.33"><vh>index </vh></v>
-<v t="leo.20181104192502.34"><vh>isAdmin </vh></v>
-<v t="leo.20181104192502.35"><vh>listdir </vh></v>
-<v t="leo.20181104192502.36"><vh>load_list </vh></v>
-<v t="leo.20181104192502.37"><vh>loadlist_access_list </vh></v>
-<v t="leo.20181104192502.38"><vh>login </vh></v>
-<v t="leo.20181104192502.39"><vh>logout </vh></v>
-<v t="leo.20181104192502.40"><vh>parse_config </vh></v>
-<v t="leo.20181104192502.41"><vh>_remove_h123_attrs </vh></v>
-<v t="leo.20181104192502.42"><vh>parse_content </vh></v>
-<v t="leo.20181104192502.43"><vh>render_menu </vh></v>
-<v t="leo.20181104192502.44"><vh>render_menu2 </vh></v>
-<v t="leo.20181104192502.45"><vh>saveConfig </vh></v>
-<v t="leo.20181104192502.46"><vh>savePage </vh></v>
-<v t="leo.20181104192502.47"><vh>search_content </vh></v>
-<v t="leo.20181104192502.48"><vh>search_form </vh></v>
-<v t="leo.20181104192502.49"><vh>send_file </vh></v>
-<v t="leo.20181104192502.50"><vh>send_images </vh></v>
-<v t="leo.20181104192502.51"><vh>send_static </vh></v>
-<v t="leo.20181104192502.52"><vh>set_admin_css </vh></v>
-<v t="leo.20181104192502.53"><vh>set_css </vh></v>
-<v t="leo.20181104192502.54"><vh>set_css2 </vh></v>
-<v t="leo.20181104192502.55"><vh>set_footer </vh></v>
-<v t="leo.20181104192502.56"><vh>sitemap </vh></v>
-<v t="leo.20181104192502.57"><vh>sitemap2 </vh></v>
-<v t="leo.20181104192502.58"><vh>sizeof_fmt </vh></v>
-<v t="leo.20181104192502.59"><vh>ssavePage </vh></v>
-<v t="leo.20181104192502.60"><vh>syntaxhighlight </vh></v>
-<v t="leo.20181104192502.61"><vh>syntaxhighlight2 </vh></v>
-<v t="leo.20181104192502.62"><vh>tinymce_editor </vh></v>
-<v t="leo.20181104192502.63"><vh>unique </vh></v>
+<v t="leo.20181104192502.1"><vh>Declarations</vh></v>
+<v t="leo.20181104192502.2"><vh>checkLogin</vh></v>
+<v t="leo.20181104192502.3"><vh>delete_file</vh></v>
+<v t="leo.20181104192502.4"><vh>doDelete</vh></v>
+<v t="leo.20181104192502.5"><vh>doSearch</vh></v>
+<v t="leo.20181104192502.6"><vh>download</vh></v>
+<v t="leo.20181104192502.7"><vh>download_list</vh></v>
+<v t="leo.20181104192502.8"><vh>downloadlist_access_list</vh></v>
+<v t="leo.20181104192502.9"><vh>downloads</vh></v>
+<v t="leo.20181104192502.10"><vh>downloadselect_access_list</vh></v>
+<v t="leo.20181104192502.11"><vh>edit_config</vh></v>
+<v t="leo.20181104192502.12"><vh>edit_page</vh></v>
+<v t="leo.20181104192502.13"><vh>editorfoot</vh></v>
+<v t="leo.20181104192502.14"><vh>editorhead</vh></v>
+<v t="leo.20181104192502.15"><vh>error_log</vh></v>
+<v t="leo.20181104192502.16"><vh>file_get_contents</vh></v>
+<v t="leo.20181104192502.17"><vh>file_lister</vh></v>
+<v t="leo.20181104192502.18"><vh>file_selector</vh></v>
+<v t="leo.20181104192502.19"><vh>file_selector_script</vh></v>
+<v t="leo.20181104192502.20"><vh>fileaxupload</vh></v>
+<v t="leo.20181104192502.21"><vh>fileuploadform</vh></v>
+<v t="leo.20181104192502.22"><vh>flvplayer</vh></v>
+<v t="leo.20181104192502.23"><vh>generate_pages</vh></v>
+<v t="leo.20181104192502.24"><vh>get_page</vh></v>
+<v t="leo.20181104192502.25"><vh>get_page2</vh></v>
+<v t="leo.20181104192502.26"><vh>image_delete_file</vh></v>
+<v t="leo.20181104192502.27"><vh>image_doDelete</vh></v>
+<v t="leo.20181104192502.28"><vh>image_list</vh></v>
+<v t="leo.20181104192502.29"><vh>imageaxupload</vh></v>
+<v t="leo.20181104192502.30"><vh>imagelist_access_list</vh></v>
+<v t="leo.20181104192502.31"><vh>imageselect_access_list</vh></v>
+<v t="leo.20181104192502.32"><vh>imageuploadform</vh></v>
+<v t="leo.20181104192502.33"><vh>index</vh></v>
+<v t="leo.20181104192502.34"><vh>isAdmin</vh></v>
+<v t="leo.20181104192502.35"><vh>listdir</vh></v>
+<v t="leo.20181104192502.36"><vh>load_list</vh></v>
+<v t="leo.20181104192502.37"><vh>loadlist_access_list</vh></v>
+<v t="leo.20181104192502.38"><vh>login</vh></v>
+<v t="leo.20181104192502.39"><vh>logout</vh></v>
+<v t="leo.20181104192502.40"><vh>parse_config</vh></v>
+<v t="leo.20181104192502.41"><vh>_remove_h123_attrs</vh></v>
+<v t="leo.20181104192502.42"><vh>parse_content</vh></v>
+<v t="leo.20181104192502.43"><vh>render_menu</vh></v>
+<v t="leo.20181104192502.44"><vh>render_menu2</vh></v>
+<v t="leo.20181104192502.45"><vh>saveConfig</vh></v>
+<v t="leo.20181104192502.46"><vh>savePage</vh></v>
+<v t="leo.20181104192502.47"><vh>search_content</vh></v>
+<v t="leo.20181104192502.48"><vh>search_form</vh></v>
+<v t="leo.20181104192502.49"><vh>send_file</vh></v>
+<v t="leo.20181104192502.50"><vh>send_images</vh></v>
+<v t="leo.20181104192502.51"><vh>send_static</vh></v>
+<v t="leo.20181104192502.52"><vh>set_admin_css</vh></v>
+<v t="leo.20181104192502.53"><vh>set_css</vh></v>
+<v t="leo.20181104192502.54"><vh>set_css2</vh></v>
+<v t="leo.20181104192502.55"><vh>set_footer</vh></v>
+<v t="leo.20181104192502.56"><vh>sitemap</vh></v>
+<v t="leo.20181104192502.57"><vh>sitemap2</vh></v>
+<v t="leo.20181104192502.58"><vh>sizeof_fmt</vh></v>
+<v t="leo.20181104192502.59"><vh>ssavePage</vh></v>
+<v t="leo.20181104192502.60"><vh>syntaxhighlight</vh></v>
+<v t="leo.20181104192502.61"><vh>syntaxhighlight2</vh></v>
+<v t="leo.20181104192502.62"><vh>tinymce_editor</vh></v>
+<v t="leo.20181104192502.63"><vh>unique</vh></v>
 </v>
 </v>
 </vnodes>
@@ -1918,7 +1918,7 @@ def send_static():
     outstring = '''&lt;!doctype html&gt;
 &lt;html&gt;&lt;head&gt;
 &lt;meta http-equiv="content-type" content="text/html;charset=utf-8"&gt;
-&lt;title&gt;期末分組專案&lt;/title&gt; \
+&lt;title&gt;計算機程式教材&lt;/title&gt; \
 &lt;link rel="stylesheet" type="text/css" href="/static/cmsimply.css"&gt;
 ''' + syntaxhighlight()
 
@@ -1970,7 +1970,7 @@ window.location= 'https://' + location.host + location.pathname + location.searc
     outstring = '''&lt;!doctype html&gt;
 &lt;html&gt;&lt;head&gt;
 &lt;meta http-equiv="content-type" content="text/html;charset=utf-8"&gt;
-&lt;title&gt;期末分組專案&lt;/title&gt; \
+&lt;title&gt;計算機程式教材&lt;/title&gt; \
 &lt;link rel="stylesheet" type="text/css" href="/static/cmsimply.css"&gt;
 ''' + syntaxhighlight()
 
@@ -2028,7 +2028,7 @@ window.location= 'https://' + location.host + location.pathname + location.searc
     outstring = '''&lt;!doctype html&gt;
 &lt;html&gt;&lt;head&gt;
 &lt;meta http-equiv="content-type" content="text/html;charset=utf-8"&gt;
-&lt;title&gt;期末分組專案&lt;/title&gt; \
+&lt;title&gt;計算機程式教材&lt;/title&gt; \
 &lt;link rel="stylesheet" type="text/css" href="./../static/cmsimply.css"&gt;
 ''' + syntaxhighlight2()
 
@@ -2214,6 +2214,11 @@ def download():
 &lt;script src="https://scrum-3.github.io/web/brython/brython.js"&gt;&lt;/script&gt;
 &lt;script src="https://scrum-3.github.io/web/brython/brython_stdlib.js"&gt;&lt;/script&gt;
 --&gt;
+&lt;style&gt;
+img {
+    border:7px solid green;
+}
+&lt;/style&gt;
 '''
 
 
@@ -2267,6 +2272,11 @@ init_mathjax();
 &lt;script src="https://scrum-3.github.io/web/brython/brython.js"&gt;&lt;/script&gt;
 &lt;script src="https://scrum-3.github.io/web/brython/brython_stdlib.js"&gt;&lt;/script&gt;
 --&gt;
+&lt;style&gt;
+img {
+    border:7px solid green;
+}
+&lt;/style&gt;
 '''
 
 
