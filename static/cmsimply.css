@@ -3,26 +3,28 @@
   color: white;
 }
 header{
-  background: #ccc;
   padding: 20px;
+  color: white ;
 }
 confmenu
 {
 	#width: 800px;
 	background: white;
-	
+	color: white ;
 	margin-bottom: 10px;
 }
 confmenu ul
 {
 	margin: 0;
 	padding: 0;
+	color: white ;
 }
 confmenu ul li
 {
 	margin: 10px;
 	list-style-type: none;
 	display: inline;
+	color: white ;
 }
 confmenu li a
 {
@@ -203,7 +205,7 @@ background-color: white;
 width: 195px;
 }
 body {
-  background-image:url(https://agirls.aotter.net/media/6e0a6af9-72f4-4102-b929-75220f0f1dd8.jpg);
+  background-image:url(http://www.flashwolves.com/uploads/desktop/11/71/20170816120858_%E9%96%83%E9%9B%BB%E7%8B%BC%E5%BD%A2%E8%B1%A1%E6%A1%8C%E5%B8%83_%E7%8B%BC%E9%AD%82%E4%B8%8D%E6%BB%85_1980x1080.jpg);
   margin-bottom: 120px;
   background-size:100%
 }
