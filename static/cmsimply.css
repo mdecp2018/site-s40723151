@@ -1,5 +1,6 @@
 .container {
   position: relative;
+  color: white;
 }
 header{
   background: #ccc;
@@ -8,7 +9,7 @@ header{
 confmenu
 {
 	#width: 800px;
-	background: #333;
+	background: white;
 	margin-bottom: 10px;
 }
 confmenu ul
@@ -27,7 +28,7 @@ confmenu li a
 	display: block;
 	float: left;
 	padding: 5px 10px;
-	color: #fff;
+	color: red;
 	background: #333;
 	text-decoration: none;
 	border-right: 1px solid #fff;
@@ -201,6 +202,8 @@ background-color: white;
 width: 195px;
 }
 body {
+  background-image:url(https://agirls.aotter.net/media/6e0a6af9-72f4-4102-b929-75220f0f1dd8.jpg);
   margin-bottom: 120px;
+  background-size:100%
 }
 
