@@ -130,18 +130,18 @@ def doDelete（）：
     其他：
         ＃多個文件被選中
         對於範圍內的索引（len（文件名））：
-            嘗試：
-                os.remove（download_dir +“/”+ filename [index]）
-                outstring + = filename [index] +“刪除！<br />”
-            除了：
-                outstring + = filename [index] +“錯誤，無法刪除文件！<br />”
+            try:
+                os.remove(download_dir + "/" + filename[index])
+                outstring += filename[index] + " deleted!<br />"
+            except:
+                outstring += filename[index] + "Error, can not delete files!<br />"
 
-    head，level，page = parse_content（）
-    directory = render_menu（head，level，page）
+    head, level, page = parse_content()
+    directory = render_menu(head, level, page)
 
-    return set_css（）+“<div class ='container'> <nav>”+ \
-               目錄+“</ nav> <section> <h1>下載列表</ h1>”+ \
-               超越+“<br/> <br /> </ body> </ html>”
+    return set_css() + "<div class='container'><nav>" + \
+               directory + "</nav><section><h1>Download List</h1>" + \
+               outstring + "<br/><br /></body></html>"
 
 
 @ app.route（'/ doSearch'，methods = ['POST']）
@@ -221,51 +221,51 @@ def download_list（）：
             outtring + =“'> <<< / a>”
             page_num = int（page） -  1
             outstring + =“<a href ='”
-            outstring + =“download_list？＆amp; page =”+ str（page_num）+“＆amp; item_per_page =”+ \
-                                str（item_per_page）+“＆amp; keyword =”+ str（session.get（'download_keyword'））
-            outstring + =“'>上一頁</a>”
+            outstring += "download_list?&amp;page=" + str(page_num) + "&amp;item_per_page=" + \
+                                str(item_per_page) + "&amp;keyword=" + str(session.get('download_keyword'))
+            outstring += "'>Previous</a> "
 
         span = 10
 
-        對於範圍內的索引（int（page）-span，int（page）+ span）：
-            如果index> = 0且index <totalpage：
+        for index in range(int(page)-span, int(page)+span):
+            if index>= 0 and index< totalpage:
                 page_now = index + 1 
-                如果page_now == int（頁面）：
-                    outstring + =“<font size ='+ 1'color ='red'>”+ str（page）+“</ font>”
-                其他：
-                    outstring + =“<a href ='”
-                    outstring + =“download_list？＆amp; page =”+ str（page_now）+“＆amp; item_per_page =”+ \
-                                        str（item_per_page）+“＆amp; keyword =”+ str（session.get（'download_keyword'））
-                    outstring + =“'>”+ str（page_now）+“</a>”
+                if page_now == int(page):
+                    outstring += "<font size='+1' color='red'>" + str(page) + " </font>"
+                else:
+                    outstring += "<a href='"
+                    outstring += "download_list?&amp;page=" + str(page_now) + "&amp;item_per_page=" + \
+                                        str(item_per_page) + "&amp;keyword=" + str(session.get('download_keyword'))
+                    outstring += "'>"+str(page_now) + "</a> "
 
-        if notlast == True：
-            nextpage = int（page）+ 1
-            outstring + =“<a href ='”
-            outstring + =“download_list？＆amp; page =”+ str（nextpage）+“＆amp; item_per_page =”+ \
-                                str（item_per_page）+“＆amp; keyword =”+ str（session.get（'download_keyword'））
-            outtring + =“'>下一步</a>”
-            outstring + =“<a href ='”
-            outstring + =“download_list？＆amp; page =”+ str（totalpage）+“＆amp; item_per_page =”+ \
-                                str（item_per_page）+“＆amp; keyword =”+ str（session.get（'download_keyword'））
-            outtring + =“'>>> </a> <br /> <br />”
+        if notlast == True:
+            nextpage = int(page) + 1
+            outstring += " <a href='"
+            outstring += "download_list?&amp;page=" + str(nextpage) + "&amp;item_per_page=" + \
+                                str(item_per_page) + "&amp;keyword=" + str(session.get('download_keyword'))
+            outstring += "'>Next</a>"
+            outstring += " <a href='"
+            outstring += "download_list?&amp;page=" + str(totalpage) + "&amp;item_per_page=" + \
+                                str(item_per_page) + "&amp;keyword=" + str(session.get('download_keyword'))
+            outstring += "'>>></a><br /><br />"
 
-        if（int（page）* int（item_per_page））<total_rows：
+        if (int(page) * int(item_per_page)) < total_rows:
             notlast = True
-            outstring + = downloadlist_access_list（files，starti，endi）+“<br />”
-        其他：
-            超越+ =“<br /> <br />”
-            outstring + = downloadlist_access_list（files，starti，total_rows）+“<br />”
+            outstring += downloadlist_access_list(files, starti, endi) + "<br />"
+        else:
+            outstring += "<br /><br />"
+            outstring += downloadlist_access_list(files, starti, total_rows) + "<br />"
 
-        if int（page）> 1：
-            outstring + =“<a href ='”
-            outstring + =“download_list？＆amp; page = 1＆amp; item_per_page =”+ str（item_per_page）+ \
-                                “＆amp; keyword =”+ str（session.get（'download_keyword'））
-            outtring + =“'> <<< / a>”
-            page_num = int（page） -  1
-            outstring + =“<a href ='”
-            outstring + =“download_list？＆amp; page =”+ str（page_num）+“＆amp; item_per_page =”+ \
-                                str（item_per_page）+“＆amp; keyword =”+ str（session.get（'download_keyword'））
-            outstring + =“'>上一頁</a>”
+        if int(page) > 1:
+            outstring += "<a href='"
+            outstring += "download_list?&amp;page=1&amp;item_per_page=" + str(item_per_page) + \
+                                "&amp;keyword=" + str(session.get('download_keyword'))
+            outstring += "'><<</a> "
+            page_num = int(page) - 1
+            outstring += "<a href='"
+            outstring += "download_list?&amp;page=" + str(page_num) + "&amp;item_per_page=" + \
+                                str(item_per_page) + "&amp;keyword=" + str(session.get('download_keyword'))
+            outstring += "'>Previous</a> "
 
         span = 10
 
@@ -284,16 +284,16 @@ def download_list（）：
 
         if notlast == True：
             nextpage = int（page）+ 1
-            outstring + =“<a href ='”
-            outstring + =“download_list？＆amp; page =”+ str（nextpage）+“＆amp; item_per_page =”+ \
-                                str（item_per_page）+“＆amp; keyword =”+ str（session.get（'download_keyword'））
-            outtring + =“'>下一步</a>”
-            outstring + =“<a href ='”
-            outstring + =“download_list？＆amp; page =”+ str（totalpage）+“＆amp; item_per_page =”+ \
-                                str（item_per_page）+“＆amp; keyword =”+ str（session.get（'download_keyword'））
-            outstring + =“'>>> </a>”
-    其他：
-        outstring + =“沒有數據！”
+            outstring += " <a href='"
+            outstring += "download_list?&amp;page=" + str(nextpage) + "&amp;item_per_page=" + \
+                                str(item_per_page) + "&amp;keyword=" + str(session.get('download_keyword'))
+            outstring += "'>Next</a>"
+            outstring += " <a href='"
+            outstring += "download_list?&amp;page=" + str(totalpage) + "&amp;item_per_page=" + \
+                                str(item_per_page) + "&amp;keyword=" + str(session.get('download_keyword'))
+            outstring += "'>>></a>"
+    else:
+        outstring += "no data!"
     outtring + =“<br /> <br /> <input type ='submit'value ='delete'> <input type ='reset'value ='reset'> </ form>”
 
     head，level，page = parse_content（）
@@ -312,12 +312,12 @@ def downloadlist_access_list（files，starti，endi）：
     outstring =“”
     對於範圍內的索引（int（starti）-1，int（endi））：
         fileName，fileExtension = os.path.splitext（files [index]）
-        fileExtension = fileExtension.lower（）
-        fileSize = sizeof_fmt（os.path.getsize（download_dir +“/”+ files [index]））
-        ＃images文件
-        if fileExtension ==“。png”或fileExtension ==“.jpg”或fileExtension ==“。gif”：
-            outstring + ='<input type =“checkbox”name =“filename”value =“'+ \
-                              files [index] +'“> <a href =”javascript：;“onClick =”window.open（\'/ images /'+ \
+        fileExtension = fileExtension.lower()
+        fileSize = sizeof_fmt(os.path.getsize(download_dir+"/"+files[index]))
+        # images files
+        if fileExtension == ".png" or fileExtension == ".jpg" or fileExtension == ".gif":
+            outstring += '<input type="checkbox" name="filename" value="' + \
+                              files[index] + '"><a href="javascript:;" onClick="window.open(\'/images/'+ \
                               files [index] +'\'，\'images \'，\'catalogmode \'，\'scrollbars \'）“>'+ \
                               files [index] +'</a>（'+ str（fileSize）+'）<br />'
         #stl文件
@@ -462,40 +462,40 @@ function cmsFilePicker（callback，value，meta）{
 def error_log（self，info =“Error”）：
     head，level，page = parse_content（）
     directory = render_menu（head，level，page）
-    return set_css（）+“<div class ='container'> <nav>”+ \
-             目錄+“</ nav> <section> <h1> ERROR </ h1>”+ info +“</ section> </ div> </ body> </ html>”
+    return set_css() + "<div class='container'><nav>" + \
+             directory + "</nav><section><h1>ERROR</h1>" + info + "</section></div></body></html>"
 
 
-def file_get_contents（filename）：
-    ＃在utf-8中打開文件並返回文件內容
-    使用open（filename，encoding =“utf-8”）作為文件：
-        return file.read（）
+def file_get_contents(filename):
+    # open file in utf-8 and return file content
+    with open(filename, encoding="utf-8") as file:
+        return file.read()
 
 
-＃與file_selector配合，用於Tinymce4編輯器的檔案選擇
-def file_lister（directory，type = None，page = 1，item_per_page = 10）：
-    files = os.listdir（目錄）
-    total_rows = len（文件）
-    totalpage = math.ceil（total_rows / int（item_per_page））
-    starti = int（item_per_page）*（int（page） -  1）+ 1
-    endi = starti + int（item_per_page） -  1
-    outstring = file_selector_script（）
-    notlast =假
-    如果total_rows> 0：
-        超越+ =“<br />”
-        if（int（page）* int（item_per_page））<total_rows：
+# 與 file_selector 配合, 用於 Tinymce4 編輯器的檔案選擇
+def file_lister(directory, type=None, page=1, item_per_page=10):
+    files = os.listdir(directory)
+    total_rows = len(files)
+    totalpage = math.ceil(total_rows/int(item_per_page))
+    starti = int(item_per_page) * (int(page) - 1) + 1
+    endi = starti + int(item_per_page) - 1
+    outstring = file_selector_script()
+    notlast = False
+    if total_rows > 0:
+        outstring += "<br />"
+        if (int(page) * int(item_per_page)) < total_rows:
             notlast = True
-        if int（page）> 1：
-            outstring + =“<a href ='”
-            outstring + =“file_selector？type =”+ type + \
-                              “＆amp; page = 1＆amp; item_per_page =”+ \
-                              str（item_per_page）+“＆amp; keyword =”+ str（session.get（'download_keyword'））
-            outtring + =“'> <<< / a>”
-            page_num = int（page） -  1
-            outstring + =“<a href ='”
-            outstring + =“file_selector？type =”+ type + \
-                              “＆amp; page =”+ str（page_num）+ \
-                              “＆amp; item_per_page =”+ str（item_per_page）+ \
+        if int(page) > 1:
+            outstring += "<a href='"
+            outstring += "file_selector?type=" + type + \
+                              "&amp;page=1&amp;item_per_page=" + \
+                              str(item_per_page) + "&amp;keyword=" + str(session.get('download_keyword'))
+            outstring += "'><<</a> "
+            page_num = int(page) - 1
+            outstring += "<a href='"
+            outstring += "file_selector?type=" + type + \
+                              "&amp;page=" + str(page_num) + \
+                              "&amp;item_per_page=" +str(item_per_page) + \
                               “＆amp; keyword =”+ str（session.get（'download_keyword'））
             outstring + =“'>上一頁</a>”
         span = 10
@@ -571,19 +571,19 @@ def file_lister（directory，type = None，page = 1，item_per_page = 10）：
                                str（nextpage）+“＆amp; item_per_page =”+ \
                                str（item_per_page）+“＆amp; keyword =”+ \
                                STR（session.get（'download_keyword'））
-            outtring + =“'>下一步</a>”
-            outstring + =“<a href ='”
-            outstring + =“file_selector？type =”+ type +“＆amp; page =”+ \
-                               str（totalpage）+“＆amp; item_per_page =”+ \
-                               str（item_per_page）+“＆amp; keyword =”+ str（session.get（'download_keyword'））
-            outstring + =“'>>> </a>”
-    其他：
-        outstring + =“沒有數據！”
+            outstring += "'>Next</a>"
+            outstring += " <a href='"
+            outstring += "file_selector?type=" + type + "&amp;page=" + \
+                               str(totalpage) + "&amp;item_per_page=" + \
+                               str(item_per_page) + "&amp;keyword=" + str(session.get('download_keyword'))
+            outstring += "'>>></a>"
+    else:
+        outstring += "no data!"
 
-    如果type ==“file”：
-        返回字符串+“<br /> <br /> <a href='fileuploadform'>文件上傳</a>”
-    其他：
-        返回outtring字符串+“<br /> <br /> <a href='imageuploadform'>圖片上傳</a>”
+    if type == "file":
+        return outstring+"<br /><br /><a href='fileuploadform'>file upload</a>"
+    else:
+        return outstring+"<br /><br /><a href='imageuploadform'>image upload</a>"
 
 
 ＃配合Tinymce4讓使用者透過html編輯器引用所上傳的文件與圖像
@@ -855,30 +855,30 @@ def get_page2（heading，head，edit）：
             return_content + = last_page +“”+ next_page +“<br /> <h1>”+ \
                                       標題+“</ h1>”+ page_content_list [i] + \
                                       “<br />”+ last_page +“”+ next_page +“<br /> <hr>”
-            pagedata_duplicate =“<h”+ level [page_order] +“>”+ heading +“</ h”+ level [page_order] +“>”+ page_content_list [i]
-            outstring_list.append（last_page +“”+ next_page +“<br />”+ tinymce_editor（directory，cgi.escape（pagedata_duplicate），page_order））
-        其他：
-            return_content + = last_page +“”+ next_page +“<br /> <h1>”+ \
-                                      標題+“</ h1>”+ page_content_list [i] + \
-                                      “<br />”+ last_page +“”+ next_page
+            pagedata_duplicate = "<h"+level[page_order] + ">" + heading + "</h" + level[page_order]+">"+page_content_list[i]
+            outstring_list.append(last_page + " " + next_page + "<br />" + tinymce_editor(directory, cgi.escape(pagedata_duplicate), page_order))
+        else:
+            return_content += last_page + " " + next_page + "<br /><h1>" + \
+                                      heading + "</h1>" + page_content_list[i] + \
+                                      "<br />" + last_page + " " + next_page
             
-        pagedata + =“<h”+ level [page_order] +“>”+標題+ \
-                          “</ h”+級別[page_order] +“>”+ page_content_list [i]
-        ＃利用cgi.escape（）將specialchar轉成只能顯示的格式
-        outstring + = last_page +“”+ next_page +“<br />”+ tinymce_editor（目錄，cgi.escape（pagedata），page_order）
+        pagedata += "<h" + level[page_order] + ">" + heading + \
+                          "</h" + level[page_order] + ">" + page_content_list[i]
+        # 利用 cgi.escape() 將 specialchar 轉成只能顯示的格式
+        outstring += last_page + " " + next_page + "<br />" + tinymce_editor(directory, cgi.escape(pagedata), page_order)
     
-    ＃edit = 0表示查看頁面
-    如果編輯== 0：
-        return set_css2（）+“<div class ='container'> <nav>”+ \
-        目錄+“</ nav> <section>”+ return_content +“</ section> </ div> </ body> </ html>”
-    ＃進入編輯模式
-    其他：
-        ＃檢查管理員是否
-        如果不是isAdmin（）：
-            重定向（url_for（'登錄'））
-        其他：
-            如果len（page_order_list）> 1：
-                ＃若碰到重複頁面頁印，且要求編輯，則導向edit_page
+    # edit=0 for viewpage
+    if edit == 0:
+        return set_css2() + "<div class='container'><nav>"+ \
+        directory + "</nav><section>" + return_content + "</section></div></body></html>"
+    # enter edit mode
+    else:
+        # check if administrator
+        if not isAdmin():
+            redirect(url_for('login'))
+        else:
+            if len(page_order_list) > 1:
+                # 若碰到重複頁面頁印, 且要求編輯, 則導向 edit_page
                 #return redirect（“/ edit_page”）
                 對於範圍內的i（len（page_order_list））：
                     outstring_duplicate + = outstring_list [i] +“<br /> <hr>”
@@ -940,28 +940,28 @@ def image_doDelete（）：
                 os.remove（image_dir +“/”+ filename [index]）
                 outstring + = filename [index] +“刪除！<br />”
             除了：
-                outstring + = filename [index] +“錯誤，無法刪除文件！<br />”
+                outstring += filename[index] + "Error, can not delete files!<br />"
 
-    head，level，page = parse_content（）
-    directory = render_menu（head，level，page）
+    head, level, page = parse_content()
+    directory = render_menu(head, level, page)
 
-    return set_css（）+“<div class ='container'> <nav>”+ \
-             目錄+“</ nav> <section> <h1>圖像列表</ h1>”+ \
-             超越+“<br/> <br /> </ body> </ html>”
+    return set_css() + "<div class='container'><nav>" + \
+             directory + "</nav><section><h1>Image List</h1>" + \
+             outstring + "<br/><br /></body></html>"
 
 
-@ app.route（'/ image_list'，methods = ['GET']）
-def image_list（）：
-    如果不是isAdmin（）：
-        return redirect（“/ login”）
-    其他：
-        如果不是request.args.get（'edit'）：
-            編輯= 1
-        其他：
-            edit = request.args.get（'edit'）
-        如果不是request.args.get（'page'）：
+@app.route('/image_list', methods=['GET'])
+def image_list():
+    if not isAdmin():
+        return redirect("/login")
+    else:
+        if not request.args.get('edit'):
+            edit= 1
+        else:
+            edit = request.args.get('edit')
+        if not request.args.get('page'):
             page = 1
-        其他：
+        else:
             page = request.args.get（'page'）
         如果不是request.args.get（'item_per_page'）：
             item_per_page = 10
@@ -1100,16 +1100,16 @@ def imagelist_access_list（files，starti，endi）：
     #popup窗口可以查看圖像，視頻或STL文件，其他文件可以直接下載
     #file是要列出的所有數據，從starti到endi
     #add文件大小
-    outstring =“”
-    對於範圍內的索引（int（starti）-1，int（endi））：
-        fileName，fileExtension = os.path.splitext（files [index]）
-        fileExtension = fileExtension.lower（）
-        fileSize = sizeof_fmt（os.path.getsize（image_dir +“/”+ files [index]））
-        ＃images文件
-        if fileExtension ==“。png”或fileExtension ==“.jpg”或fileExtension ==“。gif”：
-            outstring + ='<input type =“checkbox”name =“filename”value =“'+ files [index] + \
-                              '“> <a href =”javascript：;“onClick =”window.open（\'/ images /'+ \
-                              files [index] +'\'，\'images \'，\'catalogmode \'，\'scrollbars \'）“>'+ \
+    outstring = ""
+    for index in range(int(starti)-1, int(endi)):
+        fileName, fileExtension = os.path.splitext(files[index])
+        fileExtension = fileExtension.lower()
+        fileSize = sizeof_fmt(os.path.getsize(image_dir + "/" + files[index]))
+        # images files
+        if fileExtension == ".png" or fileExtension == ".jpg" or fileExtension == ".gif":
+            outstring += '<input type="checkbox" name="filename" value="' + files[index] + \
+                              '"><a href="javascript:;" onClick="window.open(\'/images/' + \
+                              files[index] + '\',\'images\', \'catalogmode\',\'scrollbars\')">' + \
                               files [index] +'</a>（'+ str（fileSize）+'）<br />'
     回歸過度
 
@@ -1342,31 +1342,31 @@ function keywordSearch（）{
     回歸過度
 
 
-def loadlist_access_list（files，starti，endi，filedir）：
-    ＃提供了不同的擴展文件，相關鏈接
-    #popup窗口可以查看圖像，視頻或STL文件，其他文件可以直接下載
-    #file是要列出的所有數據，從starti到endi
-    #add文件大小
-    outstring =“”
-    對於範圍內的索引（int（starti）-1，int（endi））：
-        fileName，fileExtension = os.path.splitext（files [index]）
-        fileExtension = fileExtension.lower（）
-        fileSize = sizeof_fmt（os.path.getsize（config_dir + filedir +“_ program /”+ files [index]））
-        ＃images文件
-        if fileExtension ==“。png”或fileExtension ==“.jpg”或fileExtension ==“。gif”：
+def loadlist_access_list(files, starti, endi, filedir):
+    # different extension files, associated links were provided
+    # popup window to view images, video or STL files, other files can be downloaded directly
+    # files are all the data to list, from starti to endi
+    # add file size
+    outstring = ""
+    for index in range(int(starti)-1, int(endi)):
+        fileName, fileExtension = os.path.splitext(files[index])
+        fileExtension = fileExtension.lower()
+        fileSize = sizeof_fmt(os.path.getsize(config_dir + filedir + "_programs/" + files[index]))
+        # images files
+        if fileExtension == ".png" or fileExtension == ".jpg" or fileExtension == ".gif":
             outstring + ='<input type =“checkbox”name =“filename”value =“'+ files [index] + \
                               '“> <a href =”javascript：;“onClick =”window.open（\'/ downloads /'+ \
                             files [index] +'\'，\'images \'，\'catalogmode \'，\'scrollbars \'）“>'+ files [index] +'</a>（'+ str（fileSize）+' ）<br />'
         #stl文件
         elif fileExtension ==“。stl”：
             outstring + ='<input type =“checkbox”name =“filename”value =“'+ files [index] +'”> <a href =“javascript：;” onClick =“window.open（\'/ static / viewstl.html？src = / downloads /'+ \
-            files [index] +'\'，\'images \'，\'catalogmode \'，\'scrollbars \'）“>'+ files [index] +'</a>（'+ str（fileSize）+' ）<br />'
-        #flv文件
-        elif fileExtension ==“。flv”：
-            outstring + ='<input type =“checkbox”name =“filename”value =“'+ files [index] +'”> <a href =“javascript：;” onClick =“window.open（\'/ flvplayer？filepath = / downloads /'+ \
-            files [index] +'\'，\'images \'，\'catalogmode \'，\'scrollbars \'）“>'+ files [index] +'</a>（'+ str（fileSize）+' ）<br />'
-        #py文件
-        elif fileExtension ==“。py”：
+            files[index] + '\',\'images\', \'catalogmode\',\'scrollbars\')">' + files[index] + '</a> ('+str(fileSize)+')<br />'
+        # flv files
+        elif fileExtension == ".flv":
+            outstring += '<input type="checkbox" name="filename" value="' + files[index] + '"><a href="javascript:;" onClick="window.open(\'/flvplayer?filepath=/downloads/' + \
+            files[index]+'\',\'images\', \'catalogmode\',\'scrollbars\')">' + files[index] + '</a> ('+str(fileSize)+')<br />'
+        # py files
+        elif fileExtension == ".py":
             outstring + ='<input type =“radio”name =“filename”value =“'+ files [index] +'”>'+ files [index] +'（'+ str（fileSize）+'）<br / >“
         ＃直接下載文件
         其他：
@@ -1431,29 +1431,29 @@ def _remove_h123_attrs（湯）：
             如果tag.get_text（）==“”：
                 ＃且該標註為排序第一
                 如果tag_order == 0：
-                    ＃在最前方插入標題
-                    tag.insert_before（soup.new_tag（'h1'，'First'））
-                其他：
-                    ＃移除h1，h2或h3標註，只留下內容
-                    tag.replaceWithChildren（）
-            ＃表示單一元件的標題標註，標題為單一字串者
-            其他：
-                ＃判定若其排序第一，則將tag.name為h2或h3換換為h1
-                如果tag_order == 0：
-                    tag.name =“h1”
-            ＃針對其餘單一字串內容的標註，則保持原樣
-        ＃針對內容一個以上的標題標註
-        #elif len（tag.contents）> 1：
-        其他：
-            ＃假如該標註內容長度大於1
-            ＃且該標註為排序第一
-            如果tag_order == 0：
-                ＃先移除h1，h2或h3標註，只留下內容
-                ＃tag.replaceWithChildren（）
-                ＃在最前方插入標題
-                tag.insert_before（soup.new_tag（'h1'，'First'））
-            其他：
-                ＃只保留標題內容，去除h1，h2或h3標註
+                    # 在最前方插入標題
+                    tag.insert_before(soup.new_tag('h1', 'First'))
+                else:
+                    # 移除 h1, h2 或 h3 標註, 只留下內容
+                    tag.replaceWithChildren()
+            # 表示單一元件的標題標註, 且標題為單一字串者
+            else:
+                # 判定若其排序第一, 則將 tag.name 為 h2 或 h3 者換為 h1
+                if tag_order == 0:
+                    tag.name = "h1"
+            # 針對其餘單一字串內容的標註, 則保持原樣
+        # 針對內容一個以上的標題標註
+        #elif len(tag.contents) > 1:
+        else:
+            # 假如該標註內容長度大於 1
+            # 且該標註為排序第一
+            if tag_order == 0:
+                # 先移除 h1, h2 或 h3 標註, 只留下內容
+                #tag.replaceWithChildren()
+                # 在最前方插入標題
+                tag.insert_before(soup.new_tag('h1', 'First'))
+            else:
+                # 只保留標題內容,  去除 h1, h2 或 h3 標註
                 ＃為了與前面的內文區隔，先在最前面插入br標註
                 tag.insert_before（soup.new_tag（'BR'））
                 ＃再移除非排序第一的h1，h2或h3標註，只留下內容
@@ -1516,64 +1516,64 @@ def parse_content（）：
             #i從1到i-1
             對於範圍內的i（1，len（htag））：
                 head_list.append（htag [I-1] .text.strip（））
-                ＃使用h * tag的name屬性獲取h1，h2或h3
-                #h1，h2或h3的數量是頁面菜單的級別
-                level_list.append（htag [I-1]。名稱[1]）
-                temp_data = subject.split（str（htag [i]））
-                如果len（temp_data）> 2：
-                    subject = str（htag [i]）。join（temp_data [1：]）
-                其他：
-                    subject = temp_data [1]
-                ＃將htag中的其他頁面內容從1切換到i-1
-                cut = temp_data [0]
-                ＃添加頁面內容
-                page_list.append（切）
-    #last i
-    ＃添加最後一頁標題
-    head_list.append（htag [N-1] .text.strip（））
-    ＃添加最後一個級別
-    level_list.append（htag [N-1]。名稱[1]）
-    temp_data = subject.split（str（htag [n-1]））
-    ＃最後一個主題
-    subject = temp_data [0]
-    ＃剪掉最後一頁內容
-    cut = temp_data [0]
-    ＃最後一頁內容
-    page_list.append（切）
-    return head_list，level_list，page_list
+                # use name attribute of h* tag to get h1, h2 or h3
+                # the number of h1, h2 or h3 is the level of page menu
+                level_list.append(htag[i-1].name[1])
+                temp_data = subject.split(str(htag[i]))
+                if len(temp_data) > 2:
+                    subject = str(htag[i]).join(temp_data[1:])
+                else:
+                    subject = temp_data[1]
+                # cut the other page content out of htag from 1 to i-1
+                cut = temp_data[0]
+                # add the page content
+                page_list.append(cut)
+    # last i
+    # add the last page title
+    head_list.append(htag[n-1].text.strip())
+    # add the last level
+    level_list.append(htag[n-1].name[1])
+    temp_data = subject.split(str(htag[n-1]))
+    # the last subject
+    subject = temp_data[0]
+    # cut the last page content out
+    cut = temp_data[0]
+    # the last page content
+    page_list.append(cut)
+    return head_list, level_list, page_list
 
-def render_menu（head，level，page，sitemap = 0）：
-    '''允許使用者在h1標題後直接加上h3標題，或者隨後納入h4之後作為標題標註'''
-    directory =“”
-    ＃從水平數列第一個元素作為開端
-    current_level = level [0]
-    ＃若是sitemap則僅列出樹狀架構而沒有套用css3menu架構
-    如果站點地圖：
-        目錄+ =“<ul>”
-    其他：
-        目錄+ =“<ul id ='css3menu1'class ='topmenu'>”
-    ＃逐一配合level數列中的各標題階次，一一建立對應的表單或sitemap
-    對於範圍內的索引（len（head））：
-        ＃用this_level取出迴圈中逐一處理的頁面對應層級，注意取出值為str
-        this_level =級別[索引]
-        ＃若處理中的層級比上一層級高超過一層，則將處理層級升級（處理h1後直接接h3情況）
-        if（int（this_level） -  int（current_level））> 1：
-            #this_level = str（int（this_level） -  1）
-            ＃考慮若納入h4也作為標題標註，相鄰層級可能大於一層，因此直接用上一層級+ 1
-            this_level = str（int（current_level）+ 1）
-        ＃若處理的階次比目前已經處理的階次大，表示位階較低
-        ＃其實當level [0]完全不會報告此一區塊
-        ＃從正在處理的標題階次與前一個元素比對，若階次低，則要加入另一區段的無序列表標頭
-        ＃兩者皆為str會轉為整數後比較
-        if this_level> current_level：
-            目錄+ =“<ul>”
-            目錄+ =“<li> <a href='/get_page/" + head[index] +”'>“+ head [index] +”</a>“
-        ＃假如正在處理的標題與前一個元素同位階，則必須再判定是否為另一個h1的樹狀頭
-        elif this_level == current_level：
-            ＃若正在處理的標題確實為樹狀頭，則標上樹狀頭開始標註
-            如果this_level == 1：
-                ＃這裡還是需要判定是在建立sitemap模式或者選單模式
-                如果站點地圖：
+def render_menu(head, level, page, sitemap=0):
+    '''允許使用者在 h1 標題後直接加上 h3 標題, 或者隨後納入 h4 之後作為標題標註'''
+    directory = ""
+    # 從 level 數列第一個元素作為開端
+    current_level = level[0]
+    # 若是 sitemap 則僅列出樹狀架構而沒有套用 css3menu 架構
+    if sitemap:
+        directory += "<ul>"
+    else:
+        directory += "<ul id='css3menu1' class='topmenu'>"
+    # 逐一配合 level 數列中的各標題階次, 一一建立對應的表單或 sitemap
+    for index in range(len(head)):
+        # 用 this_level 取出迴圈中逐一處理的頁面對應層級, 注意取出值為 str
+        this_level = level[index]
+        # 若處理中的層級比上一層級高超過一層, 則將處理層級升級 (處理 h1 後直接接 h3 情況)
+        if (int(this_level) - int(current_level)) > 1:
+            #this_level = str(int(this_level) - 1)
+            # 考慮若納入 h4 也作為標題標註, 相鄰層級可能大於一層, 因此直接用上一層級 + 1
+            this_level = str(int(current_level) + 1)
+        # 若處理的階次比目前已經處理的階次大, 表示位階較低
+        # 其實當 level[0] 完全不會報告此一區塊
+        # 從正在處理的標題階次與前一個元素比對, 若階次低, 則要加入另一區段的 unordered list 標頭
+        # 兩者皆為 str 會轉為整數後比較
+        if this_level > current_level:
+            directory += "<ul>"
+            directory += "<li><a href='/get_page/" + head[index] + "'>" + head[index] + "</a>"
+        # 假如正在處理的標題與前一個元素同位階, 則必須再判定是否為另一個 h1 的樹狀頭
+        elif this_level == current_level:
+            # 若正在處理的標題確實為樹狀頭, 則標上樹狀頭開始標註
+            if this_level == 1:
+                # 這裡還是需要判定是在建立 sitemap 模式或者選單模式
+                if sitemap:
                     目錄+ =“<li> <a href='/get_page/" + head[index] +”'>“+ head [index] +”</a>“
                 其他：
                     目錄+ =“<li class ='topmenu'> <a href='/get_page/" + head[index] +”'>“+ head [index] +”</a>“
@@ -1601,19 +1601,19 @@ def render_menu2（head，level，page，sitemap = 0）：
     如果站點地圖：
         目錄+ =“<ul>”
     其他：
-        目錄+ =“<ul id ='css3menu1'class ='topmenu'>”
-    對於範圍內的索引（len（head））：
-        this_level =級別[索引]
-        ＃若處理中的層級比上一層級高超過一層，則將處理層級升級（處理h1後直接接h3情況）
-        if（int（this_level） -  int（current_level））> 1：
-            #this_level = str（int（this_level） -  1）
-            this_level = str（int（current_level）+ 1）
-        if this_level> current_level：
-            目錄+ =“<ul>”
-            #directory + =“<li> <a href='/get_page/"+head[index]+"'>”+ head [index] +“</a>”
-            ＃改為連結到content /標題.html
-            目錄+ =“<li> <a href='"+ head[index] + ".html'>”+ head [index] +“</a>”
-        elif this_level == current_level：
+        directory += "<ul id='css3menu1' class='topmenu'>"
+    for index in range(len(head)):
+        this_level = level[index]
+        # 若處理中的層級比上一層級高超過一層, 則將處理層級升級 (處理 h1 後直接接 h3 情況)
+        if (int(this_level) - int(current_level)) > 1:
+            #this_level = str(int(this_level) - 1)
+            this_level = str(int(current_level) + 1)
+        if this_level > current_level:
+            directory += "<ul>"
+            #directory += "<li><a href='/get_page/"+head[index]+"'>"+head[index]+"</a>"
+            # 改為連結到 content/標題.html
+            directory += "<li><a href='" + head[index] + ".html'>" + head[index] + "</a>"
+        elif this_level == current_level:
             如果this_level == 1：
                 如果站點地圖：
                     ＃改為連結到content /標題.html
@@ -1633,17 +1633,17 @@ def render_menu2（head，level，page，sitemap = 0）：
                     #directory + =“<li> <a href='/get_page/"+head[index]+"'>”+ head [index] +“</a>”
                     目錄+ =“<li> <a href='"+ head[index] + ".html'>”+ head [index] +“</a>”
                 其他：
-                    #directory + =“<li class ='topmenu'> <a href='/get_page/"+head[index]+"'>”+ head [index] +“</a>”
-                    目錄+ =“<li class ='topmenu'> <a href='" + head[index] + ".html'>”+ head [index] +“</a>”
-            其他：
-                #directory + =“<li> <a href='/get_page/"+head[index]+"'>”+ head [index] +“</a>”
-                目錄+ =“<li> <a href='"+ head[index] + ".html'>”+ head [index] +“</a>”
+                    #directory += "<li class='topmenu'><a href='/get_page/"+head[index]+"'>"+head[index]+"</a>"
+                    directory += "<li class='topmenu'><a href='" + head[index] + ".html'>" + head[index] + "</a>"
+            else:
+                #directory += "<li><a href='/get_page/"+head[index]+"'>"+head[index]+"</a>"
+                directory += "<li><a href='" + head[index] + ".html'>" + head[index] + "</a>"
         current_level = this_level
-    目錄+ =“</ li> </ ul>”
-    返回目錄
-@ app.route（'/ saveConfig'，methods = ['POST']）
-def saveConfig（）：
-    如果不是isAdmin（）：
+    directory += "</li></ul>"
+    return directory
+@app.route('/saveConfig', methods=['POST'])
+def saveConfig():
+    if not isAdmin():
         return redirect（“/ login”）
     site_title = request.form ['site_title']
     password = request.form ['password']
@@ -1661,509 +1661,509 @@ def saveConfig（）：
             hashed_pa​​ssword = old_password
         其他：
             hashed_pa​​ssword = hashlib.sha512（password.encode（'utf-8'））。hexdigest（）
-        file = open（config_dir +“config”，“w”，encoding =“utf-8”）
-        file.write（“siteTitle：”+ site_title +“\ npassword：”+ hashed_pa​​ssword）
-        file.close（）
-        return set_css（）+“<div class ='container'> <nav>”+ \
-                 目錄+“</ nav> <section> <h1>保存配置文件</ h1> <a href='/'>主頁</a> </ body> </ html>”
+        file = open(config_dir + "config", "w", encoding="utf-8")
+        file.write("siteTitle:" + site_title + "\npassword:" + hashed_password)
+        file.close()
+        return set_css() + "<div class='container'><nav>" + \
+                 directory + "</nav><section><h1>config file saved</h1><a href='/'>Home</a></body></html>"
 
 
-@ app.route（'/ savePage'，methods = ['POST']）
-def savePage（）：
-    msgstr“”“保存所有頁面功能”“”
-    page_content = request.form ['page_content']
-    ＃檢查管理員是否
-    如果不是isAdmin（）：
-        return redirect（“/ login”）
-    如果page_content為None：
-        return error_log（“沒有要保存的內容！”）
-    ＃在插入新頁面資料前，先複製content.htm一分到content_backup.htm
-    shutil.copy2（config_dir +“content.htm”，config_dir +“content_backup.htm”）
-    file = open（config_dir +“content.htm”，“w”，encoding =“utf-8”）
-    ＃在Windows客戶端操作員中，避免textarea添加額外的\ n
-    page_content = page_content.replace（“\ n”，“”）
-    file.write（PAGE_CONTENT）
-    file.close（）
+@app.route('/savePage', methods=['POST'])
+def savePage():
+    """save all pages function"""
+    page_content = request.form['page_content']
+    # check if administrator
+    if not isAdmin():
+        return redirect("/login")
+    if page_content is None:
+        return error_log("no content to save!")
+    # 在插入新頁面資料前, 先複製 content.htm 一分到 content_backup.htm
+    shutil.copy2(config_dir + "content.htm", config_dir + "content_backup.htm")
+    file = open(config_dir + "content.htm", "w", encoding="utf-8")
+    # in Windows client operator, to avoid textarea add extra \n
+    page_content = page_content.replace("\n","")
+    file.write(page_content)
+    file.close()
 
-    ＃如果需要每個savePage generate_pages
-    #generate_pages（）
+    # if every savePage generate_pages needed
+    #generate_pages()
     '''
-    ＃需要parse_content（）來消除重複的標題
-    head，level，page = parse_content（）
-    file = open（config_dir +“content.htm”，“w”，encoding =“utf-8”）
-    對於範圍內的索引（len（head））：
-        file.write（“<h”+ str（level [index]）+“>”+ str（head [index]）+“</ h”+ str（level [index]）+“>”+ str（page [指數]））
-    file.close（）
+    # need to parse_content() to eliminate duplicate heading
+    head, level, page = parse_content()
+    file = open(config_dir + "content.htm", "w", encoding="utf-8")
+    for index in range(len(head)):
+        file.write("<h" + str(level[index])+ ">" + str(head[index]) + "</h" + str(level[index]) + ">" + str(page[index]))
+    file.close()
     '''
-    return redirect（“/ edit_page”）
+    return redirect("/edit_page")
 
 
-＃使用頭部標題來搜索頁面內容
+# use head title to search page content
 '''
-#search_content（head，page，search）
-＃從頭與頁數列中，以搜索關鍵字進行查詢
-＃原先傳回與搜索關鍵字頁面對應的頁面內容
-＃現在則傳回多重的頁面次序與頁面內容數列
-find = lambda searchList，elem：[[i for i，x in enumerate（searchList）if x == e] e e elem]
-head = [“標題一”，“標題二”，“標題三”，“標題一”，“標題四”，“標題五”]
-search_result = find（head，[“標題一”]）[0]
+# search_content(head, page, search)
+# 從 head 與 page 數列中, 以 search 關鍵字進行查詢
+# 原先傳回與 search 關鍵字頁面對應的頁面內容
+# 現在則傳回多重的頁面次序與頁面內容數列
+find = lambda searchList, elem: [[i for i, x in enumerate(searchList) if x == e] for e in elem]
+head = ["標題一","標題二","標題三","標題一","標題四","標題五"]
+search_result = find(head,["標題一"])[0]
 page_order = []
 page_content = []
-for in in range（len（search_result））：
-    ＃印出次序
-    page_order.append（search_result [I]）
-    ＃標題為head [search_result [i]]
-    #page面內容則為頁面[search_result [i]]
-    page_content.append（頁面[search_result [I]]）
-    ＃從頁面[次序]印出頁面內容
-＃準備傳回page_order與page_content等兩個數列
+for i in range(len(search_result)):
+    # 印出次序
+    page_order.append(search_result[i])
+    # 標題為 head[search_result[i]]
+    #  頁面內容則為 page[search_result[i]]
+    page_content.append(page[search_result[i]])
+    # 從 page[次序] 印出頁面內容
+# 準備傳回 page_order 與 page_content 等兩個數列
 '''
 
 
-def search_content（head，page，search）：
-    “”“搜索內容”“”
-    '''舊內容
-    返回頁面[head.index（search）]
+def search_content(head, page, search):
+    """search content"""
+    ''' 舊內容
+    return page[head.index(search)]
     '''
-    find = lambda searchList，elem：[[i for i，x in enumerate（searchList）if x == e] e e elem]
-    search_result = find（head，[search]）[0]
+    find = lambda searchList, elem: [[i for i, x in enumerate(searchList) if x == e] for e in elem]
+    search_result = find(head, [search])[0]
     page_order = []
     page_content = []
-    for in in range（len（search_result））：
-        ＃印出次序
-        page_order.append（search_result [I]）
-        ＃標題為head [search_result [i]]
-        #page面內容則為頁面[search_result [i]]
-        page_content.append（頁面[search_result [I]]）
-        ＃從頁面[次序]印出頁面內容
-    ＃準備傳回page_order與page_content等兩個數列
-    return page_order，page_content
+    for i in range(len(search_result)):
+        # 印出次序
+        page_order.append(search_result[i])
+        # 標題為 head[search_result[i]]
+        #  頁面內容則為 page[search_result[i]]
+        page_content.append(page[search_result[i]])
+        # 從 page[次序] 印出頁面內容
+    # 準備傳回 page_order 與 page_content 等兩個數列
+    return page_order, page_content
 
 
-@ app.route（'/ search_form'，defaults = {'edit'：1}）
-@ app.route（'/ search_form / <路徑：編輯>'）
-def search_form（編輯）：
-    “”“關鍵字搜索的形式”“”
-    if isAdmin（）：
-        head，level，page = parse_content（）
-        directory = render_menu（head，level，page）
-        return set_css（）+“<div class ='container'> <nav>”+ \
-                 目錄+“</ nav> <section> <h1>搜索</ h1> \
-                 <form method ='post'action ='doSearch'> \
-                 關鍵字：<input type ='text'name ='keyword'> \
-                 <input type ='submit'value ='search'> </ form> \
-                 </節> </ DIV> </ BODY> </ HTML>“
-    其他：
-        return redirect（“/ login”）
+@app.route('/search_form', defaults={'edit': 1})
+@app.route('/search_form/<path:edit>')
+def search_form(edit):
+    """form of keyword search"""
+    if isAdmin():
+        head, level, page = parse_content()
+        directory = render_menu(head, level, page)
+        return set_css() + "<div class='container'><nav>" + \
+                 directory + "</nav><section><h1>Search</h1> \
+                 <form method='post' action='doSearch'> \
+                 keywords:<input type='text' name='keyword'> \
+                 <input type='submit' value='search'></form> \
+                 </section></div></body></html>"
+    else:
+        return redirect("/login")
 
 
-#setup static directory
-@ app.route（'/靜態/ <路徑：路徑>'）
-def send_file（path）：
-    “”“發送文件功能”“”
-    return app.send_static_file（static_dir + path）
+# setup static directory
+@app.route('/static/<path:path>')
+def send_file(path):
+    """send file function"""
+    return app.send_static_file(static_dir + path)
 
 
-#setup static directory
-#@app.route（'/圖像/ <路徑：路徑>'）
-@ app.route（'/圖像/ <路徑：路徑>'）
-def send_images（path）：
-    “”發送圖像文件“”“
-    return send_from_directory（_curdir +“/ images /”，path）
+# setup static directory
+#@app.route('/images/<path:path>')
+@app.route('/images/<path:path>')
+def send_images(path):
+    """send image files"""
+    return send_from_directory(_curdir + "/images/", path)
 
 
-#setup static directory
-@ app.route（'/靜態/'）
-def send_static（）：
-    msgstr“”“發送靜態文件”“”
-    return app.send_static_file（'index.html'）
+# setup static directory
+@app.route('/static/')
+def send_static():
+    """send static files"""
+    return app.send_static_file('index.html')
 
 
-管理員的＃set_admin_css
-def set_admin_css（）：
-    msgstr“”“為管理員設置css”“”
-    outstring ='''<！doctype html>
-<HTML> <HEAD>
-<meta http-equiv =“content-type”content =“text / html; charset = utf-8”>
-<title>計算機程式教材</ title> \
-<link rel =“stylesheet”type =“text / css”href =“/ static / cmsimply.css”>
-'''+ syntaxhighlight（）
+# set_admin_css for administrator
+def set_admin_css():
+    """set css for admin"""
+    outstring = '''<!doctype html>
+<html><head>
+<meta http-equiv="content-type" content="text/html;charset=utf-8">
+<title>計算機程式教材</title> \
+<link rel="stylesheet" type="text/css" href="/static/cmsimply.css">
+''' + syntaxhighlight()
 
-    outtring + ='''
-<script src =“/ static / jquery.js”> </ script>
-<script type =“text / javascript”>
-$（函數（）{
-    $（“ul.topmenu> li：has（ul）> a”）。append（'<div class =“arrow-right”> </ div>'）;
-    $（“ul.topmenu> li ul li：has（ul）> a”）。append（'<div class =“arrow-right”> </ div>'）;
-}）;
-</ SCRIPT>
+    outstring += '''
+<script src="/static/jquery.js"></script>
+<script type="text/javascript">
+$(function(){
+    $("ul.topmenu> li:has(ul) > a").append('<div class="arrow-right"></div>');
+    $("ul.topmenu > li ul li:has(ul) > a").append('<div class="arrow-right"></div>');
+});
+</script>
 '''
-    #WS用於uwsgi操作
-    如果uwsgi：
-        outtring + ='''
-<script type =“text / javascript”>
-if（（location.href.search（/ http：/）！= -1）&&（location.href.search（/ login /）！= -1））
-window.location ='https：//'+ location.host + location.pathname + location.search;
-</ SCRIPT>
+    # SSL for uwsgi operation
+    if uwsgi:
+        outstring += '''
+<script type="text/javascript">
+if ((location.href.search(/http:/) != -1) && (location.href.search(/login/) != -1)) \
+window.location= 'https://' + location.host + location.pathname + location.search;
+</script>
 '''
-    site_title，password = parse_config（）
-    outtring + ='''
-</ head> <header> <h1>'''+ site_title +'''</ h1> \
+    site_title, password = parse_config()
+    outstring += '''
+</head><header><h1>''' + site_title + '''</h1> \
 <confmenu>
-<UL>
-<li> <a href="/">主頁</a> </ li>
-<li> <a href="/sitemap"> SiteMap </a> </ li>
-<li> <a href="/edit_page">全部修改</a> </ li>
-<li> <a href="'''+ str(request.url)+'''1">編輯</a> </ li>
-<li> <a href="/edit_config">配置</a> </ li>
-<li> <a href="/search_form">搜索</a> </ li>
-<li> <a href="/imageuploadform">圖片上傳</a> </ li>
-<li> <a href="/image_list">圖片列表</a> </ li>
-<li> <a href="/fileuploadform">文件上傳</a> </ li>
-<li> <a href="/download_list">文件列表</a> </ li>
-<li> <a href="/logout">退出</a> </ li>
-<li> <a href="/generate_pages"> generate_pages </a> </ li>
+<ul>
+<li><a href="/">Home</a></li>
+<li><a href="/sitemap">SiteMap</a></li>
+<li><a href="/edit_page">Edit All</a></li>
+<li><a href="''' + str(request.url) + '''/1">Edit</a></li>
+<li><a href="/edit_config">Config</a></li>
+<li><a href="/search_form">Search</a></li>
+<li><a href="/imageuploadform">Image Upload</a></li>
+<li><a href="/image_list">Image List</a></li>
+<li><a href="/fileuploadform">File Upload</a></li>
+<li><a href="/download_list">File List</a></li>
+<li><a href="/logout">Logout</a></li>
+<li><a href="/generate_pages">generate_pages</a></li>
 '''
-    outtring + ='''
-</ UL>
-</ confmenu> </報頭>
+    outstring += '''
+</ul>
+</confmenu></header>
 '''
-    回歸過度
+    return outstring
 
 
-def set_css（）：
-    msgstr“”“為動態網站設置css”“”
-    outstring ='''<！doctype html>
-<HTML> <HEAD>
-<meta http-equiv =“content-type”content =“text / html; charset = utf-8”>
-<title>計算機程式教材</ title> \
-<link rel =“stylesheet”type =“text / css”href =“/ static / cmsimply.css”>
-'''+ syntaxhighlight（）
+def set_css():
+    """set css for dynamic site"""
+    outstring = '''<!doctype html>
+<html><head>
+<meta http-equiv="content-type" content="text/html;charset=utf-8">
+<title>計算機程式教材</title> \
+<link rel="stylesheet" type="text/css" href="/static/cmsimply.css">
+''' + syntaxhighlight()
 
-    outtring + ='''
-<script src =“/ static / jquery.js”> </ script>
-<script type =“text / javascript”>
-$（函數（）{
-    $（“ul.topmenu> li：has（ul）> a”）。append（'<div class =“arrow-right”> </ div>'）;
-    $（“ul.topmenu> li ul li：has（ul）> a”）。append（'<div class =“arrow-right”> </ div>'）;
-}）;
-</ SCRIPT>
+    outstring += '''
+<script src="/static/jquery.js"></script>
+<script type="text/javascript">
+$(function(){
+    $("ul.topmenu> li:has(ul) > a").append('<div class="arrow-right"></div>');
+    $("ul.topmenu > li ul li:has(ul) > a").append('<div class="arrow-right"></div>');
+});
+</script>
 '''
-    如果uwsgi：
-        outtring + ='''
-<script type =“text / javascript”>
-if（（location.href.search（/ http：/）！= -1）&&（location.href.search（/ login /）！= -1））
-window.location ='https：//'+ location.host + location.pathname + location.search;
-</ SCRIPT>
+    if uwsgi:
+        outstring += '''
+<script type="text/javascript">
+if ((location.href.search(/http:/) != -1) && (location.href.search(/login/) != -1)) \
+window.location= 'https://' + location.host + location.pathname + location.search;
+</script>
 '''
-    site_title，password = parse_config（）
-    outtring + ='''
-</ head> <header> <h1>'''+ site_title +'''</ h1> \
+    site_title, password = parse_config()
+    outstring += '''
+</head><header><h1>''' + site_title + '''</h1> \
 <confmenu>
-<UL>
-<li> <a href="/">主頁</a> </ li>
-<li> <a href="/sitemap">網站地圖</a> </ li>
+<ul>
+<li><a href="/">Home</a></li>
+<li><a href="/sitemap">Site Map</a></li>
 '''
-    if isAdmin（）：
-        outtring + ='''
-<li> <a href="/edit_page">全部修改</a> </ li>
-<li> <a href="'''+ str(request.url)+'''1">編輯</a> </ li>
-<li> <a href="/edit_config">配置</a> </ li>
-<li> <a href="/search_form">搜索</a> </ li>
-<li> <a href="/imageuploadform">圖片上傳</a> </ li>
-<li> <a href="/image_list">圖片列表</a> </ li>
-<li> <a href="/fileuploadform">文件上傳</a> </ li>
-<li> <a href="/download_list">文件列表</a> </ li>
-<li> <a href="/logout">退出</a> </ li>
-<li> <a href="/generate_pages"> generate_pages </a> </ li>
+    if isAdmin():
+        outstring += '''
+<li><a href="/edit_page">Edit All</a></li>
+<li><a href="''' + str(request.url) + '''/1">Edit</a></li>
+<li><a href="/edit_config">Config</a></li>
+<li><a href="/search_form">Search</a></li>
+<li><a href="/imageuploadform">image upload</a></li>
+<li><a href="/image_list">image list</a></li>
+<li><a href="/fileuploadform">file upload</a></li>
+<li><a href="/download_list">file list</a></li>
+<li><a href="/logout">logout</a></li>
+<li><a href="/generate_pages">generate_pages</a></li>
 '''
-    其他：
-        outtring + ='''
-<li> <a href="/login">登錄</a> </ li>
+    else:
+        outstring += '''
+<li><a href="/login">login</a></li>
 '''
-    outtring + ='''
-</ UL>
-</ confmenu> </報頭>
+    outstring += '''
+</ul>
+</confmenu></header>
 '''
-    回歸過度
+    return outstring
 
 
-def set_css2（）：
-    msgstr“”“為靜態網站設置css”“”
-    outstring ='''<！doctype html>
-<HTML> <HEAD>
-<meta http-equiv =“content-type”content =“text / html; charset = utf-8”>
-<title>計算機程式教材</ title> \
-<link rel =“stylesheet”type =“text / css”href =“./../ static / cmsimply.css”>
-'''+ syntaxhighlight2（）
+def set_css2():
+    """set css for static site"""
+    outstring = '''<!doctype html>
+<html><head>
+<meta http-equiv="content-type" content="text/html;charset=utf-8">
+<title>計算機程式教材</title> \
+<link rel="stylesheet" type="text/css" href="./../static/cmsimply.css">
+''' + syntaxhighlight2()
 
-    outtring + ='''
-<script src =“./../ static / jquery.js”> </ script>
-<script type =“text / javascript”>
-$（函數（）{
-    $（“ul.topmenu> li：has（ul）> a”）。append（'<div class =“arrow-right”> </ div>'）;
-    $（“ul.topmenu> li ul li：has（ul）> a”）。append（'<div class =“arrow-right”> </ div>'）;
-}）;
-</ SCRIPT>
+    outstring += '''
+<script src="./../static/jquery.js"></script>
+<script type="text/javascript">
+$(function(){
+    $("ul.topmenu> li:has(ul) > a").append('<div class="arrow-right"></div>');
+    $("ul.topmenu > li ul li:has(ul) > a").append('<div class="arrow-right"></div>');
+});
+</script>
 '''
-    如果uwsgi：
-        outtring + ='''
-<script type =“text / javascript”>
-if（（location.href.search（/ http：/）！= -1）&&（location.href.search（/ login /）！= -1））
-window.location ='https：//'+ location.host + location.pathname + location.search;
-</ SCRIPT>
+    if uwsgi:
+        outstring += '''
+<script type="text/javascript">
+if ((location.href.search(/http:/) != -1) && (location.href.search(/login/) != -1)) \
+window.location= 'https://' + location.host + location.pathname + location.search;
+</script>
 '''
-    site_title，password = parse_config（）
-    outtring + ='''
-</ head> <header> <h1>'''+ site_title +'''</ h1> \
+    site_title, password = parse_config()
+    outstring += '''
+</head><header><h1>''' + site_title + '''</h1> \
 <confmenu>
-<UL>
-<li> <a href="index.html">主頁</a> </ li>
-<li> <a href="sitemap.html">網站地圖</a> </ li>
-<li> <a href="./../reveal/index.html">顯示</a> </ li>
-<li> <a href="./../blog/index.html">博客</a> </ li>
+<ul>
+<li><a href="index.html">Home</a></li>
+<li><a href="sitemap.html">Site Map</a></li>
+<li><a href="./../reveal/index.html">reveal</a></li>
+<li><a href="./../blog/index.html">blog</a></li>
 '''
-    outtring + ='''
-</ UL>
-</ confmenu> </報頭>
+    outstring += '''
+</ul>
+</confmenu></header>
 '''
-    回歸過度
+    return outstring
 
 
-def set_footer（）：
-    “”頁腳“”
-    返回“<footer> \
-        <a href='/edit_page'>全部修改</a> | \
-        <a href='"+ str(request.url)+"/1'>編輯</a> | \
-        <a href='edit_config'>配置</a> \
-        <a href='login'>登錄</a> | \
-        <a href='logout'>退出</a> \
-        <br />由<a href='http://cmsimple.cycu.org'> CMSimply </a>提供支持
-        </ footer> \
-        </ BODY> </ HTML>“
-@ app.route（'/ sitemap'，defaults = {'edit'：1}）
-@ app.route（'/站點地圖/ <路徑：編輯>'）
-def sitemap（編輯）：
-    msgstr“”“動態網站的站點地圖”“”
-    head，level，page = parse_content（）
-    directory = render_menu（head，level，page）
-    sitemap = render_menu（head，level，page，sitemap = 1）
-    return set_css（）+“<div class ='container'> <nav>”+目錄+ \
-             “</ nav> <section> <h1>網站地圖</ h1>”+網站地圖+ \
-             “</節> </ DIV> </ BODY> </ HTML>”
-def sitemap2（head）：
-    msgstr“”“靜態內容生成的站點地圖”“”
-    編輯= 0
-    not_used_head，level，page = parse_content（）
-    directory = render_menu2（head，level，page）
-    sitemap = render_menu2（head，level，page，sitemap = 1）
-    return set_css2（）+“<div class ='container'> <nav>”+目錄+ \
-             “</ nav> <section> <h1>網站地圖</ h1>”+網站地圖+ \
-             “</節> </ DIV> </ BODY> </ HTML>”
+def set_footer():
+    """footer for page"""
+    return "<footer> \
+        <a href='/edit_page'>Edit All</a>| \
+        <a href='" + str(request.url) + "/1'>Edit</a>| \
+        <a href='edit_config'>Config</a> \
+        <a href='login'>login</a>| \
+        <a href='logout'>logout</a> \
+        <br />Powered by <a href='http://cmsimple.cycu.org'>CMSimply</a> \
+        </footer> \
+        </body></html>"
+@app.route('/sitemap', defaults={'edit': 1})
+@app.route('/sitemap/<path:edit>')
+def sitemap(edit):
+    """sitemap for dynamic site"""
+    head, level, page = parse_content()
+    directory = render_menu(head, level, page)
+    sitemap = render_menu(head, level, page, sitemap=1)
+    return set_css() + "<div class='container'><nav>" + directory + \
+             "</nav><section><h1>Site Map</h1>" + sitemap + \
+             "</section></div></body></html>"
+def sitemap2(head):
+    """sitemap for static content generation"""
+    edit = 0
+    not_used_head, level, page = parse_content()
+    directory = render_menu2(head, level, page)
+    sitemap = render_menu2(head, level, page, sitemap=1)
+    return set_css2() + "<div class='container'><nav>" + directory + \
+             "</nav><section><h1>Site Map</h1>" + sitemap + \
+             "</section></div></body></html>"
 
 
-def sizeof_fmt（num）：
-    “”size formate“”“
-    對於['bytes'，'KB'，'MB'，'GB']中的x：
-        如果num <1024.0：
-            返回“％3.1f％s”％（num，x）
-        num / = 1024.0
-    返回“％3.1f％s”％（num，'TB'）
-@ app.route（'/ ssavePage'，methods = ['POST']）
-def ssavePage（）：
-    msgstr“”“單獨保存頁面功能”“”
-    page_content = request.form ['page_content']
-    page_order = request.form ['page_order']
-    如果不是isAdmin（）：
-        return redirect（“/ login”）
-    如果page_content為None：
-        return error_log（“沒有要保存的內容！”）
-    ＃請注意，若啟用fullpage plugin這裡的page_content tinymce4會自動加上html頭尾標註
-    page_content = page_content.replace（“\ n”，“”）
-    head，level，page = parse_content（）
-    original_head_title = head [int（page_order）]
-    ＃在插入新頁面資料前，先複製content.htm一分到content_backup.htm
-    shutil.copy2（config_dir +“content.htm”，config_dir +“content_backup.htm”）
-    file = open（config_dir +“content.htm”，“w”，encoding =“utf-8”）
-    對於範圍內的索引（len（head））：
-        if index == int（page_order）：
-            file.write（PAGE_CONTENT）
-        其他：
-            file.write（“<h”+ str（level [index]）+“>”+ str（head [index]）+“</ h”+ \
-                          STR（電平[指數]）+“>”+ STR（頁[指數]））
-    file.close（）
-    ＃如果需要每個ssavePage generate_pages
-    #generate_pages（）
+def sizeof_fmt(num):
+    """size formate"""
+    for x in ['bytes','KB','MB','GB']:
+        if num < 1024.0:
+            return "%3.1f%s" % (num, x)
+        num /= 1024.0
+    return "%3.1f%s" % (num, 'TB')
+@app.route('/ssavePage', methods=['POST'])
+def ssavePage():
+    """seperate save page function"""
+    page_content = request.form['page_content']
+    page_order = request.form['page_order']
+    if not isAdmin():
+        return redirect("/login")
+    if page_content is None:
+        return error_log("no content to save!")
+    # 請注意, 若啟用 fullpage plugin 這裡的 page_content tinymce4 會自動加上 html 頭尾標註
+    page_content = page_content.replace("\n","")
+    head, level, page = parse_content()
+    original_head_title = head[int(page_order)]
+    # 在插入新頁面資料前, 先複製 content.htm 一分到 content_backup.htm
+    shutil.copy2(config_dir + "content.htm", config_dir + "content_backup.htm")
+    file = open(config_dir + "content.htm", "w", encoding="utf-8")
+    for index in range(len(head)):
+        if index == int(page_order):
+            file.write(page_content)
+        else:
+            file.write("<h"+str(level[index])+ ">" + str(head[index]) + "</h" + \
+                          str(level[index])+">"+str(page[index]))
+    file.close()
+    # if every ssavePage generate_pages needed
+    #generate_pages()
 
-    #if head [int（page_order）]仍然存在且等於original_head_title，返回原始編輯狀態，否則轉到“/”
-    ＃這里內容被修改，我們需要再次解析新的page_content
-    head，level，page = parse_content（）
-    #for debug
-    #print（original_head_title，head [int（page_order）]）
-    ＃嘗試避免因最後一個標題刪除儲存後產生內部錯誤問題
-    如果original_head_title為None：
-        返回重定向（“/”）
-    如果original_head_title == head [int（page_order）]：
-        #edit_url =“/ get_page /”+ urllib.parse.quote_plus（head [int（page_order）]）+“＆edit = 1”
-        #edit_url =“/ get_page /”+ urllib.parse.quote_plus（original_head_title）+“/ 1”
-        edit_url =“/ get_page /”+ original_head_title +“/ 1”
-        返回重定向（edit_url）
-    其他：
-        返回重定向（“/”）
+    # if head[int(page_order)] still existed and equal original_head_title, go back to origin edit status, otherwise go to "/"
+    # here the content is modified, we need to parse the new page_content again
+    head, level, page = parse_content()
+    # for debug
+    # print(original_head_title, head[int(page_order)])
+    # 嘗試避免因最後一個標題刪除儲存後產生 internal error 問題
+    if original_head_title is None:
+        return redirect("/")
+    if original_head_title == head[int(page_order)]:
+        #edit_url = "/get_page/" + urllib.parse.quote_plus(head[int(page_order)]) + "&edit=1"
+        #edit_url = "/get_page/" + urllib.parse.quote_plus(original_head_title) + "/1"
+        edit_url = "/get_page/" + original_head_title + "/1"
+        return redirect(edit_url)
+    else:
+        return redirect("/")
 
 
-def syntaxhighlight（）：
-    返回'''
-<script type =“text / javascript”src =“/ static / syntaxhighlighter / shCore.js”> </ script>
-<script type =“text / javascript”src =“/ static / syntaxhighlighter / shBrushJScript.js”> </ script>
-<script type =“text / javascript”src =“/ static / syntaxhighlighter / shBrushJava.js”> </ script>
-<script type =“text / javascript”src =“/ static / syntaxhighlighter / shBrushPython.js”> </ script>
-<script type =“text / javascript”src =“/ static / syntaxhighlighter / shBrushSql.js”> </ script>
-<script type =“text / javascript”src =“/ static / syntaxhighlighter / shBrushXml.js”> </ script>
-<script type =“text / javascript”src =“/ static / syntaxhighlighter / shBrushPhp.js”> </ script>
-<script type =“text / javascript”src =“/ static / syntaxhighlighter / shBrushLua.js”> </ script>
-<script type =“text / javascript”src =“/ static / syntaxhighlighter / shBrushCpp.js”> </ script>
-<script type =“text / javascript”src =“/ static / syntaxhighlighter / shBrushCss.js”> </ script>
-<script type =“text / javascript”src =“/ static / syntaxhighlighter / shBrushCSharp.js”> </ script>
-<link type =“text / css”rel =“stylesheet”href =“/ static / syntaxhighlighter / css / shCoreDefault.css”/>
-<script type =“text / javascript”> SyntaxHighlighter.all（）; </ script>
+def syntaxhighlight():
+    return '''
+<script type="text/javascript" src="/static/syntaxhighlighter/shCore.js"></script>
+<script type="text/javascript" src="/static/syntaxhighlighter/shBrushJScript.js"></script>
+<script type="text/javascript" src="/static/syntaxhighlighter/shBrushJava.js"></script>
+<script type="text/javascript" src="/static/syntaxhighlighter/shBrushPython.js"></script>
+<script type="text/javascript" src="/static/syntaxhighlighter/shBrushSql.js"></script>
+<script type="text/javascript" src="/static/syntaxhighlighter/shBrushXml.js"></script>
+<script type="text/javascript" src="/static/syntaxhighlighter/shBrushPhp.js"></script>
+<script type="text/javascript" src="/static/syntaxhighlighter/shBrushLua.js"></script>
+<script type="text/javascript" src="/static/syntaxhighlighter/shBrushCpp.js"></script>
+<script type="text/javascript" src="/static/syntaxhighlighter/shBrushCss.js"></script>
+<script type="text/javascript" src="/static/syntaxhighlighter/shBrushCSharp.js"></script>
+<link type="text/css" rel="stylesheet" href="/static/syntaxhighlighter/css/shCoreDefault.css"/>
+<script type="text/javascript">SyntaxHighlighter.all();</script>
 
-<！ - 對於LaTeX方程暫時不用
-    <script src =“https://scrum-3.github.io/web/math/MathJax.js?config=TeX-MML-AM_CHTML”type =“text / javascript”> </ script>
-    <script type =“text / javascript”>
-    init_mathjax = function（）{
-        if（window.MathJax）{
-            // MathJax已加載
-            MathJax.Hub.Config（{
-                tex2jax：{
-                    inlineMath：[['$'，'$']，[“\\\\（”，“\\\\）”]]，
-                    displayMath：[['$$'，'$$']，[“\\\\ [”，“\\\\]”]]
-                }，
-                displayAlign：'left'，//將其更改為'center'到中心方程式。
-                “HTML-CSS”：{
-                    styles：{'。MathJax_Display'：{“margin”：0}}
+<!-- for LaTeX equations 暫時不用
+    <script src="https://scrum-3.github.io/web/math/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript"></script>
+    <script type="text/javascript">
+    init_mathjax = function() {
+        if (window.MathJax) {
+            // MathJax loaded
+            MathJax.Hub.Config({
+                tex2jax: {
+                    inlineMath: [ ['$','$'], ["\\\\(","\\\\)"] ],
+                    displayMath: [ ['$$','$$'], ["\\\\[","\\\\]"] ]
+                },
+                displayAlign: 'left', // Change this to 'center' to center equations.
+                "HTML-CSS": {
+                    styles: {'.MathJax_Display': {"margin": 0}}
                 }
-            }）;
-            MathJax.Hub.Queue（[“排版”，MathJax.Hub]）;
+            });
+            MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
         }
     }
-    init_mathjax（）;
-    </ SCRIPT>
- - >
- <！ - 暫時不用
-<script src =“/ static / fengari-web.js”> </ script>
-<script type =“text / javascript”src =“/ static / Cango-13v08-min.js”> </ script>
-<script type =“text / javascript”src =“/ static / CangoAxes-4v01-min.js”> </ script>
-<script type =“text / javascript”src =“/ static / gearUtils-05.js”> </ script>
-- >
-<！ - 對於Brython暫時不用
-<script src =“https://scrum-3.github.io/web/brython/brython.js”> </ script>
-<script src =“https://scrum-3.github.io/web/brython/brython_stdlib.js”> </ script>
-- >
-<風格>
+    init_mathjax();
+    </script>
+ -->
+ <!-- 暫時不用
+<script src="/static/fengari-web.js"></script>
+<script type="text/javascript" src="/static/Cango-13v08-min.js"></script>
+<script type="text/javascript" src="/static/CangoAxes-4v01-min.js"></script>
+<script type="text/javascript" src="/static/gearUtils-05.js"></script>
+-->
+<!-- for Brython 暫時不用
+<script src="https://scrum-3.github.io/web/brython/brython.js"></script>
+<script src="https://scrum-3.github.io/web/brython/brython_stdlib.js"></script>
+-->
+<style>
 img {
-    邊框：4px純藍色;
+    border:4px solid blue;
 }
-</樣式>
+</style>
 '''
 
 
 
-def syntaxhighlight2（）：
-    返回'''
-<script type =“text / javascript”src =“./../ static / syntaxhighlighter / shCore.js”> </ script>
-<script type =“text / javascript”src =“./../ static / syntaxhighlighter / shBrushJScript.js”> </ script>
-<script type =“text / javascript”src =“./../ static / syntaxhighlighter / shBrushJava.js”> </ script>
-<script type =“text / javascript”src =“./../ static / syntaxhighlighter / shBrushPython.js”> </ script>
-<script type =“text / javascript”src =“./../ static / syntaxhighlighter / shBrushSql.js”> </ script>
-<script type =“text / javascript”src =“./../ static / syntaxhighlighter / shBrushXml.js”> </ script>
-<script type =“text / javascript”src =“./../ static / syntaxhighlighter / shBrushPhp.js”> </ script>
-<script type =“text / javascript”src =“./../ static / syntaxhighlighter / shBrushLua.js”> </ script>
-<script type =“text / javascript”src =“./../ static / syntaxhighlighter / shBrushCpp.js”> </ script>
-<script type =“text / javascript”src =“./../ static / syntaxhighlighter / shBrushCss.js”> </ script>
-<script type =“text / javascript”src =“./../ static / syntaxhighlighter / shBrushCSharp.js”> </ script>
-<link type =“text / css”rel =“stylesheet”href =“./../ static / syntaxhighlighter / css / shCoreDefault.css”/>
-<script type =“text / javascript”> SyntaxHighlighter.all（）; </ script>
+def syntaxhighlight2():
+    return '''
+<script type="text/javascript" src="./../static/syntaxhighlighter/shCore.js"></script>
+<script type="text/javascript" src="./../static/syntaxhighlighter/shBrushJScript.js"></script>
+<script type="text/javascript" src="./../static/syntaxhighlighter/shBrushJava.js"></script>
+<script type="text/javascript" src="./../static/syntaxhighlighter/shBrushPython.js"></script>
+<script type="text/javascript" src="./../static/syntaxhighlighter/shBrushSql.js"></script>
+<script type="text/javascript" src="./../static/syntaxhighlighter/shBrushXml.js"></script>
+<script type="text/javascript" src="./../static/syntaxhighlighter/shBrushPhp.js"></script>
+<script type="text/javascript" src="./../static/syntaxhighlighter/shBrushLua.js"></script>
+<script type="text/javascript" src="./../static/syntaxhighlighter/shBrushCpp.js"></script>
+<script type="text/javascript" src="./../static/syntaxhighlighter/shBrushCss.js"></script>
+<script type="text/javascript" src="./../static/syntaxhighlighter/shBrushCSharp.js"></script>
+<link type="text/css" rel="stylesheet" href="./../static/syntaxhighlighter/css/shCoreDefault.css"/>
+<script type="text/javascript">SyntaxHighlighter.all();</script>
 
-<！ - 對於LaTeX方程暫時不用
-<script src =“https://scrum-3.github.io/web/math/MathJax.js?config=TeX-MML-AM_CHTML”type =“text / javascript”> </ script>
-<script type =“text / javascript”>
-init_mathjax = function（）{
-    if（window.MathJax）{
-        // MathJax已加載
-        MathJax.Hub.Config（{
-            tex2jax：{
-                inlineMath：[['$'，'$']，[“\\\\（”，“\\\\）”]]，
-                displayMath：[['$$'，'$$']，[“\\\\ [”，“\\\\]”]]
-            }，
-            displayAlign：'left'，//將其更改為'center'到中心方程式。
-            “HTML-CSS”：{
-                styles：{'。MathJax_Display'：{“margin”：0}}
+<!-- for LaTeX equations 暫時不用
+<script src="https://scrum-3.github.io/web/math/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript"></script>
+<script type="text/javascript">
+init_mathjax = function() {
+    if (window.MathJax) {
+        // MathJax loaded
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [ ['$','$'], ["\\\\(","\\\\)"] ],
+                displayMath: [ ['$$','$$'], ["\\\\[","\\\\]"] ]
+            },
+            displayAlign: 'left', // Change this to 'center' to center equations.
+            "HTML-CSS": {
+                styles: {'.MathJax_Display': {"margin": 0}}
             }
-        }）;
-        MathJax.Hub.Queue（[“排版”，MathJax.Hub]）;
+        });
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
     }
 }
-init_mathjax（）;
-</ SCRIPT>
-- >
-<！ - 暫時不用
-<script src =“./../ static / fengari-web.js”> </ script>
-<script type =“text / javascript”src =“./../ static / Cango-13v08-min.js”> </ script>
-<script type =“text / javascript”src =“./../ static / CangoAxes-4v01-min.js”> </ script>
-<script type =“text / javascript”src =“./../ static / gearUtils-05.js”> </ script>
-- >
-<！ - 對於Brython暫時不用
-<script src =“https://scrum-3.github.io/web/brython/brython.js”> </ script>
-<script src =“https://scrum-3.github.io/web/brython/brython_stdlib.js”> </ script>
-- >
-<風格>
+init_mathjax();
+</script>
+-->
+<!-- 暫時不用
+<script src="./../static/fengari-web.js"></script>
+<script type="text/javascript" src="./../static/Cango-13v08-min.js"></script>
+<script type="text/javascript" src="./../static/CangoAxes-4v01-min.js"></script>
+<script type="text/javascript" src="./../static/gearUtils-05.js"></script>
+-->
+<!-- for Brython 暫時不用
+<script src="https://scrum-3.github.io/web/brython/brython.js"></script>
+<script src="https://scrum-3.github.io/web/brython/brython_stdlib.js"></script>
+-->
+<style>
 img {
-    邊框：4px純藍色;
+    border:4px solid blue;
 }
-</樣式>
+</style>
 '''
 
 
-def tinymce_editor（menu_input = None，editor_content = None，page_order = None）：
-    sitecontent = file_get_contents（config_dir +“content.htm”）
-    editor = set_admin_css（）+ editorhead（）+'''</ head>'''+ editorfoot（）
-    ＃編輯所有頁面
-    如果page_order為None：
-        outstring = editor +“<div class ='container'> <nav>”+ \
-                        menu_input +“</ nav> <section> <form method ='post'action ='savePage'> \
-                        <textarea class ='simply-editor'name ='page_content'cols ='50'warts = '15'>“+ \
-                        editor_content +“</ textarea> <input type ='submit'value ='save'> \
-                        </ FORM> </節> </ BODY> </ HTML>“
-    其他：
-        #add viewpage按鈕wilie單頁編輯
-        head，level，page = parse_content（）
-        outstring = editor +“<div class ='container'> <nav>”+ \
-                        menu_input +“</ nav> <section> <form method ='post'action ='/ ssavePage'> \
-                        <textarea class ='simply-editor'name ='page_content'cols ='50'warts = '15'>“+ \
-                        editor_content +“</ textarea> <input type ='hidden'name ='page_order'value ='”+ \
-                        str（page_order）+“'> <input type ='submit'value ='save'>”
-        outstring + ='''<input type = button onClick =“location.href ='/ get_page /'''+ \
-                    頭[page_order] +
-                    '''''value ='viewpage'> </ form> </ section> </ body> </ html>'''
-    回歸過度
+def tinymce_editor(menu_input=None, editor_content=None, page_order=None):
+    sitecontent =file_get_contents(config_dir + "content.htm")
+    editor = set_admin_css() + editorhead() + '''</head>''' + editorfoot()
+    # edit all pages
+    if page_order is None:
+        outstring = editor + "<div class='container'><nav>" + \
+                        menu_input + "</nav><section><form method='post' action='savePage'> \
+                        <textarea class='simply-editor' name='page_content' cols='50' rows='15'>" +  \
+                        editor_content + "</textarea><input type='submit' value='save'> \
+                        </form></section></body></html>"
+    else:
+        # add viewpage button wilie single page editing
+        head, level, page = parse_content()
+        outstring = editor + "<div class='container'><nav>" + \
+                        menu_input+"</nav><section><form method='post' action='/ssavePage'> \
+                        <textarea class='simply-editor' name='page_content' cols='50' rows='15'>" + \
+                        editor_content + "</textarea><input type='hidden' name='page_order' value='" + \
+                        str(page_order) + "'><input type='submit' value='save'>"
+        outstring += '''<input type=button onClick="location.href='/get_page/''' + \
+                    head[page_order] + \
+                    ''''" value='viewpage'></form></section></body></html>'''
+    return outstring
 
 
-def unique（items）：
-    msgstr“”“使項目元素獨一無二”“”
-    found = set（[]）
+def unique(items):
+    """make items element unique"""
+    found = set([])
     keep = []
     count = {}
-    對於項目中的項目：
-        如果項目未找到：
-            count [item] = 0
-            found.add（項目）
-            keep.append（項目）
-        其他：
-            count [item] + = 1
-            keep.append（str（item）+“_”+ str（count [item]））
-    返回保持
+    for item in items:
+        if item not in found:
+            count[item] = 0
+            found.add(item)
+            keep.append(item)
+        else:
+            count[item] += 1
+            keep.append(str(item) + "_" + str(count[item]))
+    return keep
 
 
-if __name__ ==“__ main__”：
-    app.run（）
+if __name__ == "__main__":
+    app.run()
